@@ -1,6 +1,5 @@
 mod counter;
 
-
 use axum::{
     body::Body,
     extract::ConnectInfo,
@@ -78,13 +77,14 @@ async fn main() {
     });
 
     let app = Router::new()
+        .route("/", get(|| async { "success" }))
         .route("/healthz", get(|| async { "ok" }))
-        .merge(SpaRouter::new("/assets", &opt.static_dir).index_file(&opt.index_file))
-        .layer(ServiceBuilder::new().layer(tracing_layer));
+        .merge(SpaRouter::new("/assets", &opt.static_dir).index_file(&opt.index_file));
 
+    // add service route
     let app = counter::setup(app);
 
-
+    // layer
     let app = app
         .layer(ServiceBuilder::new().layer(tracing_layer))
         .layer(CorsLayer::new().allow_origin(Any).allow_methods(Any));
