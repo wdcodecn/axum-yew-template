@@ -37,7 +37,7 @@ struct Opt {
     index_file: String,
 
     /// set the listen addr
-    #[clap(short = 'a', long = "addr", default_value = "localhost")]
+    #[clap(short = 'a', long = "addr", default_value = "127.0.0.1")]
     addr: String,
 
     /// set the listen port
