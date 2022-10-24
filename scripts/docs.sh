@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-pushd server
+pushd backend
 cargo doc \
       -p axum \
       -p axum-extra \

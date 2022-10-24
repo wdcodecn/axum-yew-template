@@ -1,5 +1,5 @@
 _This is a template for [cargo-generate](https://cargo-generate.github.io/cargo-generate/)._
-_Use with `cargo generate rksm/axum-yew-template`._
+_Use with `cargo generate wdcodecn/axum-yew-template`._
 
 # {{project-name}}
 
@@ -13,4 +13,4 @@ Run the dev version (auto-reloads server & client on file change) with `./script
 
 Run the pre-compiled version with `./scripts/prod.sh`.
 
-The app will start at https://localhost:8080 by default.
+The app will start at http://localhost:8080 by default.

@@ -19,7 +19,7 @@ cargo add \
 cargo add serde --features derive
 popd
 
-pushd server;
+pushd backend;
 cargo add \
       anyhow \
       axum \

@@ -24,11 +24,11 @@ struct Opt {
     index_file: String,
 
     /// set the listen addr
-    #[clap(short = 'a', long = "addr", default_value = "::1")]
+    #[clap(short = 'a', long = "addr", default_value = "127.0.0.1")]
     addr: String,
 
     /// set the listen port
-    #[clap(short = 'p', long = "port", default_value = "8080")]
+    #[clap(short = 'p', long = "port", default_value = "8081")]
     port: u16,
 
     /// set the directory where static files are to be found

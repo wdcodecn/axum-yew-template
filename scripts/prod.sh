@@ -6,6 +6,6 @@ pushd frontend
 trunk build --release --public-url /assets/
 popd
 
-pushd server
+pushd backend
 cargo run --release -- --port 8080
 popd
