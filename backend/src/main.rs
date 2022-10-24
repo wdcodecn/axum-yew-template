@@ -1,16 +1,29 @@
 mod counter;
 
-use axum::body::Body;
-use axum::extract::ConnectInfo;
-use axum::http::{HeaderValue, Request};
-use axum::routing::get;
-use axum::Router;
+
+use axum::{
+    body::Body,
+    extract::ConnectInfo,
+    http::{HeaderValue, Method, Request},
+    response::{Html, IntoResponse},
+    routing::get,
+    Json, Router,
+};
 use axum_extra::routing::SpaRouter;
+
 use clap::Parser;
-use std::net::{IpAddr, Ipv6Addr, SocketAddr};
-use std::str::FromStr;
+use std::{
+    net::{IpAddr, Ipv6Addr, SocketAddr},
+    str::FromStr,
+};
 use tower::ServiceBuilder;
-use tower_http::trace::TraceLayer;
+
+use tower_http::{
+    cors::{Any, CorsLayer},
+    trace::TraceLayer,
+};
+
+use types::HelloResponse;
 
 #[derive(Parser, Debug)]
 #[clap(name = "{{project-name}}-server", about = "A Rust web server.")]
@@ -24,7 +37,7 @@ struct Opt {
     index_file: String,
 
     /// set the listen addr
-    #[clap(short = 'a', long = "addr", default_value = "127.0.0.1")]
+    #[clap(short = 'a', long = "addr", default_value = "localhost")]
     addr: String,
 
     /// set the listen port
@@ -70,6 +83,11 @@ async fn main() {
         .layer(ServiceBuilder::new().layer(tracing_layer));
 
     let app = counter::setup(app);
+
+
+    let app = app
+        .layer(ServiceBuilder::new().layer(tracing_layer))
+        .layer(CorsLayer::new().allow_origin(Any).allow_methods(Any));
 
     let sock_addr = SocketAddr::from((
         IpAddr::from_str(opt.addr.as_str()).unwrap_or(IpAddr::V6(Ipv6Addr::LOCALHOST)),
